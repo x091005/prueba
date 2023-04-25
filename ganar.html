@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Ganar puntos</title>
+</head>
+<body>
+	<h1>Gana puntos</h1>
+	<p>Elige una tarea para ganar puntos:</p>
+	<div>
+		<a href="tarea1.php" id="tarea1"><img src="imagen1.jpg" alt="Tarea 1"></a>
+		<p>Gana 30 puntos</p>
+	</div>
+	<div>
+		<a href="#" id="tarea2"><img src="imagen2.jpg" alt="Tarea 2"></a>
+		<p>Gana 40 puntos</p>
+	</div>
+	<div>
+		<a href="#" id="tarea3"><img src="imagen3.jpg" alt="Tarea 3"></a>
+		<p>Gana 50 puntos</p>
+	</div>
+	<div>
+		<a href="#" id="tarea4"><img src="imagen4.jpg" alt="Tarea 4"></a>
+		<p>Gana 60 puntos</p>
+	</div>
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<script type="text/javascript">
+		// Función que se ejecuta cuando se hace clic en una tarea
+		function mostrarAnuncio() 
+			// Aquí puedes agregar tu código para mostrar el anuncio estilo popup
+			// Una vez que el usuario haya completado la tarea, puedes llamar a la función de actualizar puntos
+			// Puedes hacerlo usando AJAX, tal como lo mostramos antes.
+			actualizarPuntos(<?php echo $user_id; ?>, 30); // Actualizar puntos del usuario con ID $user_id y sumar 30 puntos
+
+			// Simular un clic en el enlace de validar tarea
+			$("a[href='#']").click();
+		
+
+		$("#tarea1").click(function(event){
+			event.preventDefault(); // Prevenir el comportamiento por defecto de la etiqueta <a>
+
+			// Obtener la URL de la tarea
+			var tarea_url = "tarea1.php";
+
+			// Enviar una solicitud AJAX para validar la tarea
+			$.ajax({
+				url: tarea_url,
+				method: "POST",
+				data: {validar_tarea: true},
+				success: function(response){
+					if (response == "completado") {
+						mostrarAnuncio(); // Mostrar el anuncio cuando se haya completado la tarea
+						alert("Tarea completada. Se han acreditado los puntos.");
+					} else {
+						alert("No se ha completado la tarea.");
+					}
+				},
+				error: function(){
+					alert("Error al procesar la solicitud.");
+				}
+			});
+		});
+	</script>
+</body>
+</html>
